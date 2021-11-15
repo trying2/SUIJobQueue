@@ -12,9 +12,9 @@ class JobScheduler: ObservableObject {
     @Published var jobQueues: [JobQueue] = .init()
     @Published var jobResult: [JobResult] = .init()
     
-    private let queue = DispatchQueue(label: "JobQueue", qos: .background, attributes: .concurrent)
     
     func addJob(job: JobQueue) {
+        let queue = DispatchQueue(label: "JobQueue", qos: .userInteractive, attributes: .concurrent)
         queue.async {
             job.runJob { result in
                 self.jobResult.append(result)
